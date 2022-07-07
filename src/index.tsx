@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.module.scss';
 import VehiclesPage from './pages/Vehicles';
 import reportWebVitals from './reportWebVitals';
 
