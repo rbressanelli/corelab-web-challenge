@@ -1,17 +1,35 @@
 import React, { ReactNode } from "react";
+import { VehicleData } from "../../types/Vehicle";
+import { Container, VehicleDataContainer } from "./styles";
+import { BsPencilSquare, BsHeart, BsX } from "react-icons/bs";
 
 interface ICard {
   title: string;
   children: ReactNode;
 }
 
-const Card = (props: ICard) => {
+const Card = ({ data }: VehicleData | any) => {
   return (
-    <div>
-      <h2>{props.title}</h2>
-
-      <div>{props.children}</div>
-    </div>
+    <Container>
+      <div className="icons">
+        <span>
+          <BsPencilSquare />
+        </span>
+        <span id='remove'>
+          <BsX />
+        </span>
+        <span>
+          <BsHeart />
+        </span>
+      </div>
+      <VehicleDataContainer>
+        <p>{data.name}</p>
+        <p>Preço: {data.price}</p>
+        <p>Descrição: {data.description}</p>
+        <p>Ano: {data.year}</p>
+        <p>Cor: {data.color}</p>
+      </VehicleDataContainer>
+    </Container>
   );
 };
 
