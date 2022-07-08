@@ -1,21 +1,19 @@
 import { useEffect, useState } from "react";
 import { Button, Card, Search } from "../../components";
-import { IVehicle } from "../../types/Vehicle";
+import { IVehicle, VehicleData } from "../../types/Vehicle";
+import { useVehicle } from "../../Providers/vehicles";
 
 const VehiclesPage = () => {
   const [vehicles, setVehicles] = useState<IVehicle[]>([]);
   const [search, setSearch] = useState<string>("");
 
-  // useEffect(() => {
-  //   const fetchVehicles = async () => {
-  //     const payload = await getVehicles();
-  //     setVehicles(payload);
-  //   };
+  const { listVehicle, vehiclesList } = useVehicle();
 
-  //   fetchVehicles();
-  // }, []);
+  useEffect(() => {
+    listVehicle();
+  }, []);
 
-  console.log({ vehicles });
+  // console.log(vehiclesList[0]);
 
   return (
     <div>
@@ -24,11 +22,10 @@ const VehiclesPage = () => {
 
         <Button text="Add new vehicle" onClick={() => {}} />
 
-        <Card title="Sandero Stepway">
-          <p>Price: 22000</p>
-          <p>Description: Carro usado por 2 anos...</p>
-          <p>Year: 2018</p>
-        </Card>
+        {vehiclesList.map((vehicle: VehicleData, index: any) => (
+          <Card key={index} data={vehicle}/>
+        ))}
+        
       </main>
     </div>
   );
