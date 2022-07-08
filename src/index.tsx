@@ -1,14 +1,22 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import VehiclesPage from './pages/Vehicles';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import VehiclesPage from "./pages/Vehicles";
+import reportWebVitals from "./reportWebVitals";
+import { BrowserRouter } from "react-router-dom";
+import Providers from "./Providers";
+import GlobalStyle from "./styles/global";
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+  document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <VehiclesPage />
+    <BrowserRouter>
+      <Providers>
+        <GlobalStyle />
+        <VehiclesPage />
+      </Providers>
+    </BrowserRouter>
   </React.StrictMode>
 );
 
