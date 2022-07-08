@@ -1,10 +1,13 @@
+import { AddButton } from "./styles";
+import { BsPlusLg } from 'react-icons/bs'
+
 interface IButton {
   onClick: () => void;
   text: string;
 }
 
 const Button = (props: IButton) => {
-  return <button onClick={props.onClick}>{props.text}</button>;
+  return <AddButton  onClick={props.onClick}><span><BsPlusLg /></span> {props.text}</AddButton>
 };
 
 export default Button;

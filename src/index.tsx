@@ -5,6 +5,7 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import Providers from "./Providers";
 import GlobalStyle from "./styles/global";
+import App from "./App";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -14,7 +15,7 @@ root.render(
     <BrowserRouter>
       <Providers>
         <GlobalStyle />
-        <VehiclesPage />
+        <App />
       </Providers>
     </BrowserRouter>
   </React.StrictMode>

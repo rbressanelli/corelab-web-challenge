@@ -6,8 +6,6 @@ import {
   useEffect,
 } from "react";
 
-import { useHistory } from "react-router-dom";
-import { History } from "history";
 import api from "../../lib/api";
 
 interface VehicleProps {
