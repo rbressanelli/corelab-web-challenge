@@ -13,12 +13,12 @@ export interface IVehicle {
 export interface VehicleData {
   uuid?: string;
   name: string;
-  description: string;
+  description?: string;
   plate: string;
-  isFavorite: boolean;
+  isFavorite?: boolean;
   year: number;
   color: string;
-  price: number;
+  price: string;
   createdOn?: Date;
   updatedOn?: Date;
 }

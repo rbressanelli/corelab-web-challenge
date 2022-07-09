@@ -1,7 +1,8 @@
 import React, { ReactNode } from "react";
 import { VehicleData } from "../../types/Vehicle";
 import { Container, VehicleDataContainer } from "./styles";
-import { BsPencilSquare, BsHeart, BsX } from "react-icons/bs";
+import { BsPencilSquare, BsHeart, BsX, BsSuitHeartFill } from "react-icons/bs";
+import { useVehicle } from '../../Providers/vehicles'
 
 interface ICard {
   title: string;
@@ -9,6 +10,9 @@ interface ICard {
 }
 
 const Card = ({ data }: VehicleData | any) => {
+
+  const { deleteVehicle, updateVehicle, favorite } = useVehicle()  
+
   return (
     <Container>
       <div className="icons">
@@ -16,10 +20,14 @@ const Card = ({ data }: VehicleData | any) => {
           <BsPencilSquare />
         </span>
         <span id='remove'>
-          <BsX />
+          <BsX onClick={() => deleteVehicle(data.uuid)} />
         </span>
         <span>
-          <BsHeart />
+          { !data.isFavorite ?
+            <BsHeart onClick={() => updateVehicle(data)}/>
+            :
+            <BsSuitHeartFill onClick={() => updateVehicle(data)}/>
+            }
         </span>
       </div>
       <VehicleDataContainer>

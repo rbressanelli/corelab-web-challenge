@@ -4,6 +4,7 @@ import {
   useContext,
   useState,
   useEffect,
+  useCallback
 } from "react";
 
 import api from "../../lib/api";
@@ -15,23 +16,25 @@ interface VehicleProps {
 interface VehicleData {
   uuid?: string;
   name: string;
-  description: string;
+  description?: string;
   plate: string;
-  isFavorite: boolean;
+  isFavorite?: boolean;
   year: number;
   color: string;
-  price: number;
+  price: string;
   createdOn?: Date;
   updatedOn?: Date;
+  
 }
 
 interface VehicleProviderData {
   createVehicle: (vehicleData: VehicleData) => void;
   listVehicle: () => void;
-  updateVehicle: (uuid: VehicleData, vehivleData: VehicleData) => void;
+  updateVehicle: (uuid: VehicleData) => void;
   deleteVehicle: (uuid: VehicleData) => void;
   vehicle: VehicleData;
   vehiclesList: VehicleData[];
+  favorite: boolean
 }
 
 const VehicleContext = createContext<VehicleProviderData>(
@@ -43,6 +46,7 @@ export const VehicleProvider = ({ children }: VehicleProps) => {
   const [vehiclesList, setVehiclesList] = useState<VehicleData[]>(
     [] as VehicleData[]
   );
+  const [favorite, setFavorite] = useState(false)
 
   const createVehicle = (vehicleData: VehicleData) => {
     api
@@ -65,13 +69,24 @@ export const VehicleProvider = ({ children }: VehicleProps) => {
       .catch((err) => console.log(err));
   };
 
-  const updateVehicle = () => {};
+  const updateVehicle = useCallback ( async(data: VehicleData) => {        
+    const response = await api.put(
+      `/vehicles/${data.uuid}`
+    ) 
+  }, []);
 
-  const deleteVehicle = () => {};
+  
 
+  const deleteVehicle = useCallback( async(uuid: any) => {
+    const response = await api.delete(
+      `/vehicles/${uuid}`
+    )
+  }, [])
+  
+  
   useEffect(() => {
     listVehicle();
-  }, []);
+  }, [deleteVehicle]);
 
   return (
     <VehicleContext.Provider
@@ -82,7 +97,7 @@ export const VehicleProvider = ({ children }: VehicleProps) => {
         deleteVehicle,
         vehicle,
         vehiclesList,
-
+        favorite
       }}
     >
       {children}
