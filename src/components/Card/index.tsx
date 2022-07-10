@@ -3,6 +3,8 @@ import { VehicleData } from "../../types/Vehicle";
 import { Container, VehicleDataContainer } from "./styles";
 import { BsPencilSquare, BsHeart, BsX, BsSuitHeartFill } from "react-icons/bs";
 import { useVehicle } from '../../Providers/vehicles'
+import { useNavigate } from "react-router-dom";
+
 
 interface ICard {
   title: string;
@@ -11,22 +13,26 @@ interface ICard {
 
 const Card = ({ data }: VehicleData | any) => {
 
-  const { deleteVehicle, updateVehicle, favorite } = useVehicle()  
+  const navigate = useNavigate()
+
+  const { deleteVehicle, updateFavoriteVehicle, setVehicle } = useVehicle()  
 
   return (
     <Container>
       <div className="icons">
         <span>
-          <BsPencilSquare />
+          <BsPencilSquare onClick={() => {
+            setVehicle(data)
+            navigate('/update')}} />
         </span>
         <span id='remove'>
           <BsX onClick={() => deleteVehicle(data.uuid)} />
         </span>
         <span>
           { !data.isFavorite ?
-            <BsHeart onClick={() => updateVehicle(data)}/>
+            <BsHeart onClick={() => updateFavoriteVehicle(data)}/>
             :
-            <BsSuitHeartFill onClick={() => updateVehicle(data)}/>
+            <BsSuitHeartFill onClick={() => updateFavoriteVehicle(data)}/>
             }
         </span>
       </div>

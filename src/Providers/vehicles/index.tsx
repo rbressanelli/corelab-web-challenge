@@ -6,6 +6,7 @@ import {
   useEffect,
   useCallback
 } from "react";
+import { VehicleData } from "../../types/Vehicle";
 
 import api from "../../lib/api";
 
@@ -13,28 +14,16 @@ interface VehicleProps {
   children: ReactNode;
 }
 
-interface VehicleData {
-  uuid?: string;
-  name: string;
-  description?: string;
-  plate: string;
-  isFavorite?: boolean;
-  year: number;
-  color: string;
-  price: string;
-  createdOn?: Date;
-  updatedOn?: Date;
-  
-}
-
 interface VehicleProviderData {
   createVehicle: (vehicleData: VehicleData) => void;
   listVehicle: () => void;
-  updateVehicle: (uuid: VehicleData) => void;
+  updateFavoriteVehicle: (data: VehicleData) => void;
+  updateVehicle: (data: VehicleData, uuid: string | undefined) => void;
   deleteVehicle: (uuid: VehicleData) => void;
   vehicle: VehicleData;
+  setVehicle: React.Dispatch<React.SetStateAction<VehicleData>>;
   vehiclesList: VehicleData[];
-  favorite: boolean
+
 }
 
 const VehicleContext = createContext<VehicleProviderData>(
@@ -46,7 +35,6 @@ export const VehicleProvider = ({ children }: VehicleProps) => {
   const [vehiclesList, setVehiclesList] = useState<VehicleData[]>(
     [] as VehicleData[]
   );
-  const [favorite, setFavorite] = useState(false)
 
   const createVehicle = (vehicleData: VehicleData) => {
     api
@@ -69,11 +57,26 @@ export const VehicleProvider = ({ children }: VehicleProps) => {
       .catch((err) => console.log(err));
   };
 
-  const updateVehicle = useCallback ( async(data: VehicleData) => {        
+  const updateFavoriteVehicle = useCallback ( async(data: VehicleData) => {        
     const response = await api.put(
       `/vehicles/${data.uuid}`
     ) 
   }, []);
+
+  const updateVehicle =  ({...data}: VehicleData, uuid: any) => {    
+    api
+      .patch(`/vehicles/${uuid}`, {
+        name: data.name,
+        brand: data.brand,
+        color: data.color,
+        year: data.year,
+        plate: data.plate,
+        price: data.price,
+        description: data.description,
+      })
+      .then((response) => console.log(response))
+      .catch((err) => console.log(err))
+  }
 
   
 
@@ -93,11 +96,12 @@ export const VehicleProvider = ({ children }: VehicleProps) => {
       value={{
         createVehicle,
         listVehicle,
+        updateFavoriteVehicle,
         updateVehicle,
         deleteVehicle,
         vehicle,
-        vehiclesList,
-        favorite
+        setVehicle,
+        vehiclesList,        
       }}
     >
       {children}

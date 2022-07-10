@@ -1,27 +1,24 @@
+import { DataForm } from "../../components";
 import { Container } from "./styles";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { DataForm } from "../../components";
 import { useVehicle } from "../../Providers/vehicles";
 import { useNavigate } from "react-router-dom";
 import { RegForm } from "../../types/Vehicle";
 
-const AddForm = () => {
-  const { createVehicle } = useVehicle();
+const UpdateVehicleData = ({ dataVehicle }: any) => {
+  const { updateVehicle, vehicle } = useVehicle();
   const navigate = useNavigate();
 
   const schema = yup.object().shape({
-    name: yup.string().required("Campo obrigatório!"),
-    brand: yup.string().required("Campo obrigatório!"),
-    color: yup.string().required("Campo obrigatório!"),
-    year: yup
-      .number()
-      .typeError("Informar um valor numérico!")
-      .required("Campo obrigatório!"),
-    plate: yup.string().required("Campo obrigatório!"),
-    description: yup.string().required("Campo obrigatório!"),
-    price: yup.string().required("Campo obrigatório!"),
+    name: yup.string().optional(),
+    brand: yup.string().optional(),
+    color: yup.string().optional(),
+    // year: yup.number(),
+    plate: yup.string().optional(),
+    description: yup.string().optional(),
+    price: yup.string().optional(),
   });
 
   const {
@@ -31,15 +28,21 @@ const AddForm = () => {
     reset,
   } = useForm<RegForm>({ resolver: yupResolver(schema) });
 
-  const handleForm = (data: RegForm) => {
-    createVehicle(data);
+  const handleForm = (data: RegForm | any) => {
+    for (const key in data) {
+      if (data[key] === "") {
+        delete data[key];
+      }
+    }
+
+    updateVehicle(data, vehicle.uuid);
     reset();
     navigate("/");
   };
 
   return (
     <Container>
-      <DataForm
+      <DataForm        
         register={register}
         handleSubmit={handleSubmit}
         handleForm={handleForm}
@@ -49,4 +52,4 @@ const AddForm = () => {
   );
 };
 
-export default AddForm;
+export default UpdateVehicleData;

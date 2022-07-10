@@ -13,6 +13,7 @@ export interface IVehicle {
 export interface VehicleData {
   uuid?: string;
   name: string;
+  brand: string;
   description?: string;
   plate: string;
   isFavorite?: boolean;
@@ -22,3 +23,14 @@ export interface VehicleData {
   createdOn?: Date;
   updatedOn?: Date;
 }
+
+export interface RegForm {
+  name: string;
+  brand: string;
+  color: string;
+  year: number;
+  plate: string;
+  price: string; 
+  description: string; 
+}
+
