@@ -4,7 +4,9 @@ import {
   useContext,
   useState,
   useEffect,
-  useCallback
+  useCallback,
+  Dispatch,
+  SetStateAction,
 } from "react";
 import { VehicleData } from "../../types/Vehicle";
 
@@ -21,9 +23,18 @@ interface VehicleProviderData {
   updateVehicle: (data: VehicleData, uuid: string | undefined) => void;
   deleteVehicle: (uuid: VehicleData) => void;
   vehicle: VehicleData;
-  setVehicle: React.Dispatch<React.SetStateAction<VehicleData>>;
+  setVehicle: Dispatch<SetStateAction<VehicleData>>;
   vehiclesList: VehicleData[];
-
+  setBrand: Dispatch<SetStateAction<undefined>>;
+  setColor: Dispatch<SetStateAction<undefined>>;
+  setYear: Dispatch<SetStateAction<undefined>>;
+  setMinValue:Dispatch<SetStateAction<undefined>>;
+  setMaxValue: Dispatch<SetStateAction<undefined>>;
+  minValue: number | undefined
+  maxValue: number | undefined
+  brand: string | undefined;
+  color: string | undefined;
+  year: number | undefined;
 }
 
 const VehicleContext = createContext<VehicleProviderData>(
@@ -35,8 +46,13 @@ export const VehicleProvider = ({ children }: VehicleProps) => {
   const [vehiclesList, setVehiclesList] = useState<VehicleData[]>(
     [] as VehicleData[]
   );
-  const [checkMove, setCheckMove] = useState<Boolean>(false)
-  
+  const [checkMove, setCheckMove] = useState<Boolean>(false);
+  const [brand, setBrand] = useState();
+  const [color, setColor] = useState();
+  const [year, setYear] = useState();
+  const [minValue, setMinValue] = useState();
+  const [maxValue, setMaxValue] = useState();
+
   const createVehicle = (vehicleData: VehicleData) => {
     api
       .post("/vehicles", vehicleData)
@@ -53,20 +69,20 @@ export const VehicleProvider = ({ children }: VehicleProps) => {
       .get<VehicleData[]>("/vehicles")
       .then((response) => {
         setVehiclesList(response.data);
-        
       })
       .catch((err) => console.log(err));
   };
 
-  const updateFavoriteVehicle = useCallback ( async(data: VehicleData) => {        
-    const response = await api.put(
-      `/vehicles/${data.uuid}`
-    ) 
-    console.log(data)
-    setCheckMove(!checkMove)
-  }, [checkMove]);
+  const updateFavoriteVehicle = useCallback(
+    async (data: VehicleData) => {
+      const response = await api.put(`/vehicles/${data.uuid}`);
+      console.log(data);
+      setCheckMove(!checkMove);
+    },
+    [checkMove]
+  );
 
-  const updateVehicle =  ({...data}: VehicleData, uuid: any) => {    
+  const updateVehicle = ({ ...data }: VehicleData, uuid: any) => {
     api
       .patch(`/vehicles/${uuid}`, {
         name: data.name,
@@ -78,21 +94,19 @@ export const VehicleProvider = ({ children }: VehicleProps) => {
         description: data.description,
       })
       .then((response) => setCheckMove(!checkMove))
-      .catch((err) => console.log(err))
-  }
+      .catch((err) => console.log(err));
+  };
 
-  
+  const deleteVehicle = useCallback(
+    async (uuid: any) => {
+      const response = await api.delete(`/vehicles/${uuid}`);
+      setCheckMove(!checkMove);
+    },
+    [checkMove]
+  );
 
-  const deleteVehicle = useCallback( async(uuid: any) => {
-    const response = await api.delete(
-      `/vehicles/${uuid}`
-    )
-    setCheckMove(!checkMove)
-  }, [checkMove])
-  
-  
   useEffect(() => {
-    listVehicle();    
+    listVehicle();
   }, [checkMove]);
 
   return (
@@ -105,7 +119,17 @@ export const VehicleProvider = ({ children }: VehicleProps) => {
         deleteVehicle,
         vehicle,
         setVehicle,
-        vehiclesList,        
+        vehiclesList,
+        brand,
+        color,
+        year,
+        setBrand,
+        setColor,
+        setYear,
+        maxValue,
+        minValue,
+        setMaxValue,
+        setMinValue
       }}
     >
       {children}

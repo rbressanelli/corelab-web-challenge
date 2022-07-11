@@ -10,7 +10,8 @@ const VehiclesPage = () => {
   const [search, setSearch] = useState<string>("");
   const navigate = useNavigate();
 
-  const { listVehicle, vehiclesList } = useVehicle();
+  const { listVehicle, vehiclesList, brand, color, year, minValue, maxValue } =
+    useVehicle();
   console.log(search);
   useEffect(() => {
     listVehicle();
@@ -59,6 +60,9 @@ const VehiclesPage = () => {
                     .filter((vehicle: VehicleData) =>
                       search ? Object.values(vehicle).includes(search) : true
                     )
+                    .filter((value) => (brand ? value.name === brand : true))
+                    .filter((value) => (color ? value.color === color : true))
+                    .filter((value) => (year ? value.year === year : true))
                     .map((vehicle: VehicleData, index: number) => (
                       <Card key={index} data={vehicle} />
                     ))}

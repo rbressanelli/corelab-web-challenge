@@ -25,4 +25,5 @@ export const Container = styled.div`
 export const VehicleDataContainer = styled.div`
   text-align: left;
   margin: 20px 0;
+  width: 200px;
 `
