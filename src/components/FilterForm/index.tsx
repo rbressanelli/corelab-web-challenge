@@ -15,7 +15,7 @@ const FilterForm = () => {
     setMinValue,
     setMaxValue,
   } = useVehicle();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const nameChoices = vehiclesList.map((value) => {
     return { value: value.name, label: value.name };
@@ -28,8 +28,8 @@ const FilterForm = () => {
   });
 
   const handleClick = () => {
-    navigate('/')
-  }
+    navigate("/");
+  };
 
   return (
     <Container>
@@ -72,11 +72,21 @@ const FilterForm = () => {
       <div className="price-container">
         <div className="price">
           <label htmlFor="min">Preço mín.</label>
-          <input id="min" type="text" onChange={(e: any) => setMinValue(e?.value)} />
+          <input
+            disabled
+            id="min"
+            type="text"
+            onChange={(e: any) => setMinValue(e?.value)}
+          />
         </div>
         <div className="price">
           <label htmlFor="max">Preço max.</label>
-          <input id="max" type="text" onChange={(e: any) => setMaxValue(e?.value)} />
+          <input
+            disabled
+            id="max"
+            type="text"
+            onChange={(e: any) => setMaxValue(e?.value)}
+          />
         </div>
       </div>
       <Button onClick={() => handleClick()} text="SALVAR"></Button>

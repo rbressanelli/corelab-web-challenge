@@ -8,7 +8,6 @@ interface IButton {
 }
 
 const Button = (props: IButton) => {
-  
   return (
     <AddButton type={props.type} onClick={props.onClick}>
       {props.text !== "SALVAR" && (

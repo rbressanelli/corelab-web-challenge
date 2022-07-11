@@ -5,7 +5,7 @@ export const Container = styled.div`
   margin: 20px;
   background-color: #f04f4f;
   color: #fff;
-  max-width: 300px;  
+  max-width: 300px;
 
   & > div.icons {
     text-align: right;
@@ -13,17 +13,17 @@ export const Container = styled.div`
 
   & > div > span {
     color: #000;
-    font-size: 1.6rem;  
+    font-size: 1.6rem;
 
     :hover {
       cursor: pointer;
-      filter: invert(0.6)
-    }     
-  } 
+      filter: invert(0.6);
+    }
+  }
 `;
 
 export const VehicleDataContainer = styled.div`
   text-align: left;
   margin: 20px 0;
   width: 200px;
-`
+`;

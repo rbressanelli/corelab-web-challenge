@@ -2,38 +2,34 @@ import React, { ReactNode } from "react";
 import { VehicleData } from "../../types/Vehicle";
 import { Container, VehicleDataContainer } from "./styles";
 import { BsPencilSquare, BsHeart, BsX, BsSuitHeartFill } from "react-icons/bs";
-import { useVehicle } from '../../Providers/vehicles'
+import { useVehicle } from "../../Providers/vehicles";
 import { useNavigate } from "react-router-dom";
 
-
-interface ICard {
-  title: string;
-  children: ReactNode;
-}
-
 const Card = ({ data }: VehicleData | any) => {
+  const navigate = useNavigate();
 
-  const navigate = useNavigate()
-
-  const { deleteVehicle, updateFavoriteVehicle, setVehicle } = useVehicle()  
+  const { deleteVehicle, updateFavoriteVehicle, setVehicle } = useVehicle();
 
   return (
     <Container>
       <div className="icons">
         <span>
-          <BsPencilSquare onClick={() => {
-            setVehicle(data)
-            navigate('/update')}} />
+          <BsPencilSquare
+            onClick={() => {
+              setVehicle(data);
+              navigate("/update");
+            }}
+          />
         </span>
-        <span id='remove'>
+        <span id="remove">
           <BsX onClick={() => deleteVehicle(data.uuid)} />
         </span>
         <span>
-          { !data.isFavorite ?
-            <BsHeart onClick={() => updateFavoriteVehicle(data)}/>
-            :
-            <BsSuitHeartFill onClick={() => updateFavoriteVehicle(data)}/>
-            }
+          {!data.isFavorite ? (
+            <BsHeart onClick={() => updateFavoriteVehicle(data)} />
+          ) : (
+            <BsSuitHeartFill onClick={() => updateFavoriteVehicle(data)} />
+          )}
         </span>
       </div>
       <VehicleDataContainer>

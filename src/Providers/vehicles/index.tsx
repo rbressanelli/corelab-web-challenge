@@ -28,10 +28,10 @@ interface VehicleProviderData {
   setBrand: Dispatch<SetStateAction<undefined>>;
   setColor: Dispatch<SetStateAction<undefined>>;
   setYear: Dispatch<SetStateAction<undefined>>;
-  setMinValue:Dispatch<SetStateAction<undefined>>;
+  setMinValue: Dispatch<SetStateAction<undefined>>;
   setMaxValue: Dispatch<SetStateAction<undefined>>;
-  minValue: number | undefined
-  maxValue: number | undefined
+  minValue: number | undefined;
+  maxValue: number | undefined;
   brand: string | undefined;
   color: string | undefined;
   year: number | undefined;
@@ -129,7 +129,7 @@ export const VehicleProvider = ({ children }: VehicleProps) => {
         maxValue,
         minValue,
         setMaxValue,
-        setMinValue
+        setMinValue,
       }}
     >
       {children}

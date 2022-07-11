@@ -6,7 +6,7 @@ export const Form = styled.form`
   padding: 20px;
   background-color: #f9f9f9;
   min-height: 90vh;
-  
+
   @media only screen and (min-width: 400px) {
     width: 360px;
     margin: 0 auto;
@@ -17,7 +17,6 @@ export const Form = styled.form`
     padding: 10px 20px;
 
     ::placeholder {
-        
     }
   }
 
@@ -27,7 +26,7 @@ export const Form = styled.form`
   }
 
   & > div {
-    margin-top: 5px;    
+    margin-top: 5px;
     text-align: right;
   }
 

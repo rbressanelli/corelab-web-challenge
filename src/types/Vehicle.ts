@@ -30,7 +30,6 @@ export interface RegForm {
   color: string;
   year: number;
   plate: string;
-  price: string; 
-  description: string; 
+  price: string;
+  description: string;
 }
-

@@ -42,7 +42,7 @@ const UpdateVehicleData = ({ dataVehicle }: any) => {
 
   return (
     <Container>
-      <DataForm        
+      <DataForm
         register={register}
         handleSubmit={handleSubmit}
         handleForm={handleForm}
