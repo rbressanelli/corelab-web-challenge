@@ -35,7 +35,8 @@ export const VehicleProvider = ({ children }: VehicleProps) => {
   const [vehiclesList, setVehiclesList] = useState<VehicleData[]>(
     [] as VehicleData[]
   );
-
+  const [checkMove, setCheckMove] = useState<Boolean>(false)
+  
   const createVehicle = (vehicleData: VehicleData) => {
     api
       .post("/vehicles", vehicleData)
@@ -61,7 +62,9 @@ export const VehicleProvider = ({ children }: VehicleProps) => {
     const response = await api.put(
       `/vehicles/${data.uuid}`
     ) 
-  }, []);
+    console.log(data)
+    setCheckMove(!checkMove)
+  }, [checkMove]);
 
   const updateVehicle =  ({...data}: VehicleData, uuid: any) => {    
     api
@@ -74,7 +77,7 @@ export const VehicleProvider = ({ children }: VehicleProps) => {
         price: data.price,
         description: data.description,
       })
-      .then((response) => console.log(response))
+      .then((response) => setCheckMove(!checkMove))
       .catch((err) => console.log(err))
   }
 
@@ -84,12 +87,13 @@ export const VehicleProvider = ({ children }: VehicleProps) => {
     const response = await api.delete(
       `/vehicles/${uuid}`
     )
-  }, [])
+    setCheckMove(!checkMove)
+  }, [checkMove])
   
   
   useEffect(() => {
-    listVehicle();
-  }, [deleteVehicle]);
+    listVehicle();    
+  }, [checkMove]);
 
   return (
     <VehicleContext.Provider

@@ -1,7 +1,7 @@
 import { Container, Input } from "./styles";
-import { BiSearchAlt2 } from "react-icons/bi";
 import { BsSearch } from 'react-icons/bs'
 import { TbAdjustmentsHorizontal } from 'react-icons/tb'
+import { useNavigate } from 'react-router-dom'
 
 interface ISearch {
   placeholder: string;
@@ -10,11 +10,14 @@ interface ISearch {
 }
 
 const Search = (props: ISearch) => {
+
+  const navigate = useNavigate()
+
   return (
     <Container>
       <span><BsSearch /></span>
       <Input type="text" placeholder={props.placeholder} value={props.value} onChange={props.onChange} />
-      <p>< TbAdjustmentsHorizontal/></p>
+      <p><TbAdjustmentsHorizontal id='filter' onClick={() => navigate('/filter')}  /></p>
     </Container>
   );
 };
